@@ -49,7 +49,7 @@ const Login = (props) => {
     <Grid container component="main" className={classes.root}>
       <Grid item xs={false} sm={4} md={5}>
         <Grid className={classes.image}>
-          <Grid direction="column" className={classes.layer}>
+          <Grid container direction="column" className={classes.layer}>
             <Logo />
             <Typography variant="h4" className={classes.text}>Converse with anyone with any language</Typography>
           </Grid>
@@ -59,7 +59,7 @@ const Login = (props) => {
         <div className={classes.paper}>
           <Grid container item justify="flex-end" alignItems="center">
             <Typography color="textSecondary">Already have an account?</Typography>
-            <CustomButton buttonCaption={'Login'} onRouteChange={onRouteChange} />
+            <CustomButton buttonCaption={'Login'} onRouteChange={onRouteChange}>Login</CustomButton>
           </Grid>
           <Grid container item >
             <Box ml={15}><Typography variant="h4">Create an account.</Typography></Box>
@@ -114,7 +114,7 @@ const Login = (props) => {
                     {formErrorMessage.confirmPassword}
                   </FormHelperText>
                 </FormControl>
-                <Button type= "submit" variant="contained" size="large" color="primary" className={classes.submit}>
+                <Button type="submit" variant="contained" size="large" color="primary" className={classes.submit}>
                   Create
                 </Button>
               </form>
