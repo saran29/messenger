@@ -4,7 +4,7 @@ import BackgroundImage from "./static/bg-img.png";
 export const useStyles = makeStyles((theme) => ({
     text: {
         color: '#fff',
-        padding: '10vh'
+        marginTop: '8vh'
     },
     image: {
         backgroundImage: `url(${BackgroundImage})`,

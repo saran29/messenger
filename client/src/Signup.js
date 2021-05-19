@@ -10,6 +10,7 @@ import {
   TextField,
   FormHelperText,
   Paper,
+  Hidden
 } from "@material-ui/core";
 import CustomButton from './components/CustomButton/CustomButton';
 import { ReactComponent as Logo } from "./static/bubble.svg";
@@ -47,14 +48,16 @@ const Login = (props) => {
 
   return (
     <Grid container component="main" className={classes.root}>
-      <Grid item xs={false} sm={4} md={5}>
-        <Grid className={classes.image}>
-          <Grid container direction="column" className={classes.layer}>
-            <Logo />
-            <Typography variant="h4" className={classes.text}>Converse with anyone with any language</Typography>
+      <Hidden xsDown>
+        <Grid item xs={false} sm={4} md={5}>
+          <Grid className={classes.image}>
+            <Grid container direction="column" className={classes.layer}>
+              <Logo />
+              <Typography variant="h4" className={classes.text}>Converse with anyone with any language</Typography>
+            </Grid>
           </Grid>
         </Grid>
-      </Grid>
+      </Hidden>
       <Grid item xs={12} sm={8} md={7} justify="center" component={Paper} elevation={6}>
         <div className={classes.paper}>
           <Grid container item justify="flex-end" alignItems="center">

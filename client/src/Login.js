@@ -11,6 +11,7 @@ import {
   Paper,
   InputAdornment,
   Link,
+  Hidden
 } from "@material-ui/core";
 import { login } from "./store/utils/thunkCreators";
 import CustomButton from './components/CustomButton/CustomButton';
@@ -41,6 +42,7 @@ const Login = (props) => {
 
   return (
     <Grid container component="main" className={classes.root}>
+      <Hidden xsDown>
       <Grid item xs={false} sm={4} md={5}>
         <Grid className={classes.image}>
           <Grid container direction="column" className={classes.layer}>
@@ -49,6 +51,7 @@ const Login = (props) => {
           </Grid>
         </Grid>
       </Grid>
+      </Hidden>
       <Grid item xs={12} sm={8} md={7} justify="center" component={Paper} elevation={6}>
         <div className={classes.paper}>
           <Grid container item justify="flex-end" alignItems="center">
