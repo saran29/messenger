@@ -8,10 +8,19 @@ import {
   Button,
   FormControl,
   TextField,
+  Paper,
+  InputAdornment,
+  Link,
+  Hidden
 } from "@material-ui/core";
 import { login } from "./store/utils/thunkCreators";
+import CustomButton from './components/CustomButton/CustomButton';
+import { ReactComponent as Logo } from "./static/bubble.svg";
+import { useStyles } from "./Styles.js"
+
 
 const Login = (props) => {
+  const classes = useStyles();
   const history = useHistory();
   const { user, login } = props;
 
@@ -23,45 +32,71 @@ const Login = (props) => {
     await login({ username, password });
   };
 
+  const onRouteChange = () => {
+    history.push("/register")
+  }
+
   if (user.id) {
     return <Redirect to="/home" />;
   }
 
   return (
-    <Grid container justify="center">
-      <Box>
-        <Grid container item>
-          <Typography>Need to register?</Typography>
-          <Button onClick={() => history.push("/register")}>Register</Button>
+    <Grid container component="main" className={classes.root}>
+      <Hidden xsDown>
+      <Grid item xs={false} sm={4} md={5}>
+        <Grid className={classes.image}>
+          <Grid container direction="column" className={classes.layer}>
+            <Logo />
+            <Typography variant="h4" className={classes.text}>Converse with anyone with any language</Typography>
+          </Grid>
         </Grid>
-        <form onSubmit={handleLogin}>
-          <Grid>
-            <Grid>
-              <FormControl margin="normal" required>
-                <TextField
-                  aria-label="username"
-                  label="Username"
-                  name="username"
-                  type="text"
-                />
-              </FormControl>
-            </Grid>
-            <FormControl margin="normal" required>
-              <TextField
-                label="password"
-                aria-label="password"
-                type="password"
-                name="password"
-              />
-            </FormControl>
-            <Grid>
-              <Button type="submit" variant="contained" size="large">
-                Login
-              </Button>
+      </Grid>
+      </Hidden>
+      <Grid item xs={12} sm={8} md={7} justify="center" component={Paper} elevation={6}>
+        <div className={classes.paper}>
+          <Grid container item justify="flex-end" alignItems="center">
+            <Typography color="textSecondary">Don't have an account?</Typography>
+            <CustomButton onRouteChange={onRouteChange}>Register</CustomButton>
+          </Grid>
+          <Grid container item >
+            <Box ml={15}><Typography variant="h4">Welcome Back!</Typography></Box>
+            <Grid container item justify="center">
+              <form onSubmit={handleLogin} className={classes.form}>
+                <FormControl margin="normal" required>
+                  <TextField
+                    className={classes.input}
+                    aria-label="username"
+                    label="Username"
+                    name="username"
+                    type="text"
+                  />
+                </FormControl>
+                <FormControl margin="normal" required>
+                  <TextField
+                    className={classes.input}
+                    label="Password"
+                    aria-label="password"
+                    type="password"
+                    name="password"
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment component={Link} position="start">
+                          <Link href="#" color="primary">
+                            {"Forgot?"}
+                          </Link>
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                </FormControl>
+                <Button type="submit" variant="contained" size="large" color="primary" className={classes.submit}>
+                  Login
+                </Button>
+              </form>
             </Grid>
           </Grid>
-        </form>
-      </Box>
+        </div>
+      </Grid>
     </Grid>
   );
 };
