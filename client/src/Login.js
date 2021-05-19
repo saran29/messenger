@@ -7,14 +7,14 @@ import {
   Typography,
   Button,
   FormControl,
-  TextField, 
-  Paper, 
+  TextField,
+  Paper,
   InputAdornment,
   Link,
 } from "@material-ui/core";
 import { login } from "./store/utils/thunkCreators";
 import CustomButton from './components/CustomButton/CustomButton';
-import { ReactComponent as Logo} from "./static/bubble.svg";
+import { ReactComponent as Logo } from "./static/bubble.svg";
 import { useStyles } from "./Styles.js"
 
 
@@ -22,7 +22,7 @@ const Login = (props) => {
   const classes = useStyles();
   const history = useHistory();
   const { user, login } = props;
-  
+
   const handleLogin = async (event) => {
     event.preventDefault();
     const username = event.target.username.value;
@@ -31,7 +31,7 @@ const Login = (props) => {
     await login({ username, password });
   };
 
-  const onRouteChange = (route) => {
+  const onRouteChange = () => {
     history.push("/register")
   }
 
@@ -43,7 +43,7 @@ const Login = (props) => {
     <Grid container component="main" className={classes.root}>
       <Grid item xs={false} sm={4} md={5}>
         <Grid className={classes.image}>
-          <Grid direction="column" className={classes.layer}>
+          <Grid container direction="column" className={classes.layer}>
             <Logo />
             <Typography variant="h4" className={classes.text}>Converse with anyone with any language</Typography>
           </Grid>
@@ -53,7 +53,7 @@ const Login = (props) => {
         <div className={classes.paper}>
           <Grid container item justify="flex-end" alignItems="center">
             <Typography color="textSecondary">Don't have an account?</Typography>
-            <CustomButton buttonCaption={'Register'} onRouteChange={onRouteChange} />
+            <CustomButton onRouteChange={onRouteChange}>Register</CustomButton>
           </Grid>
           <Grid container item >
             <Box ml={15}><Typography variant="h4">Welcome Back!</Typography></Box>
