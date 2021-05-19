@@ -18,9 +18,9 @@ const ColorButton = withStyles((theme) => ({
     },
 }))(Button);
 
-const CustomButton = ({ onRouteChange, buttonCaption }) => {
+const CustomButton = (props) => {
     return (
-        <ColorButton onClick={() => onRouteChange('login')}>{buttonCaption}</ColorButton>
+        <ColorButton onClick={() => props.onRouteChange()}>{props.children}</ColorButton>
     )
 }
 
