@@ -20,13 +20,15 @@ const styles = {
 };
 
 const SmallAvatar = withStyles((theme)=> ({
-  circular: {
+  square: {
     background: theme.palette.primary.main,
-    width: theme.spacing(3),
+    width: 'auto',
     height: theme.spacing(3),
+    borderRadius: "3vh",
     fontSize: theme.spacing(1.5),
-    fontWeight: 'bold',
-    margin: theme.spacing(1),
+    fontWeight: "bold",
+    textAlign: "center",
+    padding: "1vh"
   }
 }))(Avatar);
 
@@ -34,7 +36,15 @@ class Chat extends Component {
   handleClick = async (conversation) => {
     await this.props.setActiveChat(conversation.otherUser.username);
   };
-
+  unreadMessages = () => {
+    let unread = 0;
+    for(let i = 0; i < this.props.conversation.messages.length; i++)
+    {
+      if(this.props.conversation.messages[i].read === false)
+        unread++;
+    }
+    return unread;
+  }
   render() {
     const { classes } = this.props;
     const otherUser = this.props.conversation.otherUser;
@@ -50,7 +60,7 @@ class Chat extends Component {
           sidebar={true}
         />
         <ChatContent conversation={this.props.conversation} />
-        <SmallAvatar variant="circular">5</SmallAvatar>
+        <SmallAvatar variant="square">{this.unreadMessages()}</SmallAvatar>
       </Box>
     );
   }
