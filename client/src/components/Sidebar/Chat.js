@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Box } from "@material-ui/core";
+import { Box, Avatar } from "@material-ui/core";
 import { BadgeAvatar, ChatContent } from "../Sidebar";
 import { withStyles } from "@material-ui/core/styles";
 import { setActiveChat } from "../../store/activeConversation";
@@ -18,6 +18,17 @@ const styles = {
     },
   },
 };
+
+const SmallAvatar = withStyles((theme)=> ({
+  circular: {
+    background: theme.palette.primary.main,
+    width: theme.spacing(3),
+    height: theme.spacing(3),
+    fontSize: theme.spacing(1.5),
+    fontWeight: 'bold',
+    margin: theme.spacing(1),
+  }
+}))(Avatar);
 
 class Chat extends Component {
   handleClick = async (conversation) => {
@@ -39,6 +50,7 @@ class Chat extends Component {
           sidebar={true}
         />
         <ChatContent conversation={this.props.conversation} />
+        <SmallAvatar variant="circular">5</SmallAvatar>
       </Box>
     );
   }
