@@ -19,7 +19,7 @@ const styles = {
   },
 };
 
-const SmallAvatar = withStyles((theme)=> ({
+const SmallAvatar = withStyles((theme) => ({
   square: {
     background: theme.palette.primary.main,
     width: 'auto',
@@ -36,18 +36,21 @@ class Chat extends Component {
   handleClick = async (conversation) => {
     await this.props.setActiveChat(conversation.otherUser.username);
   };
+
   unreadMessages = () => {
-    let unread = 0;
-    for(let i = 0; i < this.props.conversation.messages.length; i++)
-    {
-      if(this.props.conversation.messages[i].read === false)
+    const { user, conversation } = this.props;
+    const count = conversation.messages.reduce((unread, message) => {
+      if (message.senderId !== user.id && !message.read)
         unread++;
-    }
-    return unread;
+      return unread;
+    }, 0)
+    return count;
   }
+
   render() {
     const { classes } = this.props;
     const otherUser = this.props.conversation.otherUser;
+    const unread = this.unreadMessages();
     return (
       <Box
         onClick={() => this.handleClick(this.props.conversation)}
@@ -60,7 +63,7 @@ class Chat extends Component {
           sidebar={true}
         />
         <ChatContent conversation={this.props.conversation} />
-        <SmallAvatar variant="square">{this.unreadMessages()}</SmallAvatar>
+        {unread > 0 ? <SmallAvatar variant="square">{unread}</SmallAvatar> : <Box></Box>}
       </Box>
     );
   }
