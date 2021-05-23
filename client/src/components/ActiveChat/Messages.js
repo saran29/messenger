@@ -22,23 +22,23 @@ const Messages = (props) => {
     <Box>
       {
         messages.map((message, index) => {
-        const time = moment(message.createdAt).format("h:mm");
-        return message.senderId === userId ? (
-          <Box key={message.id}>
-            <SenderBubble text={message.text} time={time} />
-            { index === size -1 ? (
-              <Box className={classes.root}>
-              <Avatar
-                alt={otherUser.username}
-                src={otherUser.photoUrl}
-                className={classes.small} />
+          const time = moment(message.createdAt).format("h:mm");
+          return message.senderId === userId ? (
+            <Box key={message.id}>
+              <SenderBubble text={message.text} time={time} />
+              { index === size - 1 && message.read ? (
+                <Box className={classes.root}>
+                  <Avatar
+                    alt={otherUser.username}
+                    src={otherUser.photoUrl}
+                    className={classes.small} />
+                </Box>
+              ) : <Box></Box>}
             </Box>
-            ) : <Box></Box>}
-          </Box>
-        ) : (
-          <OtherUserBubble key={message.id} text={message.text} time={time} otherUser={otherUser} />
-        );
-      })}
+          ) : (
+            <OtherUserBubble key={message.id} text={message.text} time={time} otherUser={otherUser} />
+          );
+        })}
     </Box>
   );
 };
