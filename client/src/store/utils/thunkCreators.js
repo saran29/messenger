@@ -17,9 +17,7 @@ export const fetchUser = () => async (dispatch) => {
   try {
     const { data } = await axios.get("/auth/user");
     dispatch(gotUser(data));
-    if (data.id) {
-      socket.emit("go-online", data.id);
-    }
+    await goOnline(data.id); 
   } catch (error) {
     console.error(error);
   } finally {
@@ -31,7 +29,7 @@ export const register = (credentials) => async (dispatch) => {
   try {
     const { data } = await axios.post("/auth/register", credentials);
     dispatch(gotUser(data));
-    socket.emit("go-online", data.id);
+    await goOnline(data.id);
   } catch (error) {
     console.error(error);
     dispatch(gotUser({ error: error.response.data.error || "Server Error" }));
@@ -42,7 +40,7 @@ export const login = (credentials) => async (dispatch) => {
   try {
     const { data } = await axios.post("/auth/login", credentials);
     dispatch(gotUser(data));
-    socket.emit("go-online", data.id);
+    await goOnline(data.id);
   } catch (error) {
     console.error(error);
     dispatch(gotUser({ error: error.response.data.error || "Server Error" }));
@@ -69,6 +67,13 @@ export const fetchConversations = () => async (dispatch) => {
     console.error(error);
   }
 };
+const goOnline = async (id) => {
+  console.log(`id in go online:${id}`);
+  if (typeof id !== undefined){
+    socket.emit("go-online", id);
+  }
+  
+}
 
 const saveMessage = async (body) => {
   const { data } = await axios.post("/api/messages", body);
