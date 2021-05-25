@@ -11,7 +11,7 @@ const { app, sessionStore } = require("../app");
 const http = require("http");
 const db = require("../db");
 const onlineUsers = require("../onlineUsers");
-const idMap = require("../idMap.js")
+
 /**
  * Get port from environment and store in Express.
  */
