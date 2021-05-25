@@ -45,6 +45,10 @@ io.on("connection", (socket) => {
     });
   });
 
+  socket.on("message-read", (data) => {
+    io.to(onlineUsers.get(data.recipientId)).emit("message-read", data);
+  });
+
   socket.on("logout", (id) => {
     if (onlineUsers.has(id)) {
       onlineUsers.delete(id);
