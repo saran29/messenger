@@ -28,7 +28,8 @@ const SmallAvatar = withStyles((theme) => ({
     fontSize: theme.spacing(1.5),
     fontWeight: "bold",
     textAlign: "center",
-    padding: "1vh"
+    padding: "1vh",
+    margin: "1vh"
   }
 }))(Avatar);
 
