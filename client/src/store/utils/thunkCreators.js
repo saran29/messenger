@@ -80,10 +80,6 @@ const saveMessage = async (body) => {
   return data;
 };
 
-const sendReadStatus = async (body) => {
-  await axios.put("/api/read", body);
-}
-
 const sendMessage = (data, body) => {
   socket.emit("new-message", {
     message: data.message,
@@ -109,14 +105,6 @@ export const postMessage = (body) => async (dispatch) => {
     console.error(error);
   }
 };
-
-export const updateReadStatus = async (param) => {
-  if (param.recipientId !== null) {
-    socket.emit("message-read", param)
-    const data = { recipientId: param.recipientId, senderId: param.senderId };
-    sendReadStatus(data);
-  }
-}
 
 export const searchUsers = (searchTerm) => async (dispatch) => {
   try {
