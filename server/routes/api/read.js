@@ -16,11 +16,11 @@ router.put("/", async (req, res, next) => {
       recipientId
     );
 
-    const messages = await Message.update({read : '1'},{
+    const messages = await Message.update({read : true},{
         where: {
             [Op.and]: [
               { conversationId: conversation.id },
-              { read: '0' }
+              { read: false }
             ]
           },
     })
