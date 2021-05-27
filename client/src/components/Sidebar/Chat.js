@@ -32,11 +32,14 @@ const SmallAvatar = withStyles((theme) => ({
   }
 }))(Avatar);
 
-class Chat extends Component {
-  handleClick = async (conversation) => {
-    await this.props.setActiveChat(conversation.otherUser.username);
+function Chat(props) {
+  const { classes } = props;
+  const otherUser = props.conversation.otherUser;
+    
+  const handleClick = async (conversation) => {
+    await props.setActiveChat(conversation.otherUser.username);
   };
-
+  
   unreadMessages = () => {
     const { user, conversation } = this.props;
     const count = conversation.messages.reduce((unread, message) => {
@@ -46,14 +49,9 @@ class Chat extends Component {
     }, 0)
     return count;
   }
-
-  render() {
-    const { classes } = this.props;
-    const otherUser = this.props.conversation.otherUser;
-    const unread = this.unreadMessages();
     return (
       <Box
-        onClick={() => this.handleClick(this.props.conversation)}
+        onClick={() => handleClick(props.conversation)}
         className={classes.root}
       >
         <BadgeAvatar
@@ -62,12 +60,11 @@ class Chat extends Component {
           online={otherUser.online}
           sidebar={true}
         />
-        <ChatContent conversation={this.props.conversation} />
+        <ChatContent conversation={props.conversation} />
         {unread > 0 ? <SmallAvatar variant="square">{unread}</SmallAvatar> : <Box></Box>}
       </Box>
     );
   }
-}
 
 const mapDispatchToProps = (dispatch) => {
   return {

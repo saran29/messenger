@@ -1,83 +1,34 @@
 import React from "react";
-import { Redirect, useHistory } from "react-router-dom";
-import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
 import {
   Grid,
-  Box,
-  Typography,
-  Button,
-  FormControl,
-  TextField,
+  Hidden
 } from "@material-ui/core";
-import { login } from "./store/utils/thunkCreators";
+import Navigation from './components/Welcome/Navigation';
+import { useStyles } from "./Styles.js"
+import SideBanner from "./components/Welcome/SideBanner";
+import SignInForm from "./components/Welcome/SignInForm";
 
-const Login = (props) => {
+const Login = () => {
+  const classes = useStyles();
   const history = useHistory();
-  const { user, login } = props;
-
-  const handleLogin = async (event) => {
-    event.preventDefault();
-    const username = event.target.username.value;
-    const password = event.target.password.value;
-
-    await login({ username, password });
-  };
-
-  if (user.id) {
-    return <Redirect to="/home" />;
+  const header = "Don't have an account?";
+  const name = "Register";
+  const onRouteChange = () => {
+    history.push("/register")
   }
-
   return (
-    <Grid container justify="center">
-      <Box>
-        <Grid container item>
-          <Typography>Need to register?</Typography>
-          <Button onClick={() => history.push("/register")}>Register</Button>
-        </Grid>
-        <form onSubmit={handleLogin}>
-          <Grid>
-            <Grid>
-              <FormControl margin="normal" required>
-                <TextField
-                  aria-label="username"
-                  label="Username"
-                  name="username"
-                  type="text"
-                />
-              </FormControl>
-            </Grid>
-            <FormControl margin="normal" required>
-              <TextField
-                label="password"
-                aria-label="password"
-                type="password"
-                name="password"
-              />
-            </FormControl>
-            <Grid>
-              <Button type="submit" variant="contained" size="large">
-                Login
-              </Button>
-            </Grid>
-          </Grid>
-        </form>
-      </Box>
+    <Grid container component="main" className={classes.root}>
+      <Hidden xsDown>
+        <SideBanner />
+      </Hidden>
+      <Grid item sm={8} md={6} justify="center">
+        <Navigation onRouteChange={onRouteChange} header={header} name={name} />
+        <SignInForm />
+      </Grid>
     </Grid>
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    user: state.user,
-  };
-};
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    login: (credentials) => {
-      dispatch(login(credentials));
-    },
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default Login;
