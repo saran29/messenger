@@ -1,5 +1,5 @@
-import React from "react";
-import { Box } from "@material-ui/core";
+import React, { useEffect, useState } from "react";
+import { Box, Avatar } from "@material-ui/core";
 import { BadgeAvatar, ChatContent } from "../Sidebar";
 import { withStyles } from "@material-ui/core/styles";
 import { setActiveChat } from "../../store/activeConversation";
@@ -19,13 +19,35 @@ const styles = {
   },
 };
 
+const SmallAvatar = withStyles((theme) => ({
+  square: {
+    background: theme.palette.primary.main,
+    width: 'auto',
+    height: theme.spacing(3),
+    borderRadius: "3vh",
+    fontSize: theme.spacing(1.5),
+    fontWeight: "bold",
+    textAlign: "center",
+    padding: "1vh"
+  }
+}))(Avatar);
+
 function Chat(props) {
-  const { classes } = props;
+  const { user, conversation, classes } = props;
   const otherUser = props.conversation.otherUser;
-    
+  const [count, setCount] = useState(0);  
   const handleClick = async (conversation) => {
     await props.setActiveChat(conversation.otherUser.username);
   };
+  useEffect(() => {
+    const count = conversation.messages.reduce((unread, message) => {
+      if (message.senderId !== user.id && !message.read)
+        unread++;
+      return unread;
+    }, 0);
+    setCount(count);
+  },[conversation, user]);
+
     return (
       <Box
         onClick={() => handleClick(props.conversation)}
@@ -38,6 +60,7 @@ function Chat(props) {
           sidebar={true}
         />
         <ChatContent conversation={props.conversation} />
+        {count > 0 ? <SmallAvatar variant="square">{count}</SmallAvatar> : <Box></Box>}
       </Box>
     );
   }

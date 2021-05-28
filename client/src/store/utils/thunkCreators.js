@@ -76,7 +76,6 @@ export const fetchConversations = () => async (dispatch) => {
   }
 };
 const goOnline = async (id) => {
-  console.log(`id in go online:${id}`);
   if (typeof id !== undefined){
     socket.emit("go-online", id);
   }
@@ -87,6 +86,10 @@ const saveMessage = async (body) => {
   const { data } = await axios.post("/api/messages", body);
   return data;
 };
+
+const sendReadStatus = async (body) => {
+  await axios.put("/api/read", body);
+}
 
 const sendMessage = (data, body) => {
   socket.emit("new-message", {
@@ -113,6 +116,14 @@ export const postMessage = (body) => async (dispatch) => {
     console.error(error);
   }
 };
+
+export const updateReadStatus = async (param) => {
+  if (param.recipientId !== null) {
+    socket.emit("message-read", param)
+    const data = { recipientId: param.recipientId, senderId: param.senderId };
+    sendReadStatus(data);
+  }
+}
 
 export const searchUsers = (searchTerm) => async (dispatch) => {
   try {
