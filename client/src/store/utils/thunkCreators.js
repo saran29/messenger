@@ -76,7 +76,6 @@ export const fetchConversations = () => async (dispatch) => {
   }
 };
 const goOnline = async (id) => {
-  console.log(`id in go online:${id}`);
   if (typeof id !== undefined){
     socket.emit("go-online", id);
   }

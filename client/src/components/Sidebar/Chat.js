@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Avatar } from "@material-ui/core";
 import { BadgeAvatar, ChatContent } from "../Sidebar";
 import { withStyles } from "@material-ui/core/styles";
@@ -33,22 +33,21 @@ const SmallAvatar = withStyles((theme) => ({
 }))(Avatar);
 
 function Chat(props) {
-  const { classes } = props;
+  const { user, conversation, classes } = props;
   const otherUser = props.conversation.otherUser;
-    
+  const [count, setCount] = useState(0);  
   const handleClick = async (conversation) => {
     await props.setActiveChat(conversation.otherUser.username);
   };
-  
-  unreadMessages = () => {
-    const { user, conversation } = this.props;
+  useEffect(() => {
     const count = conversation.messages.reduce((unread, message) => {
       if (message.senderId !== user.id && !message.read)
         unread++;
       return unread;
-    }, 0)
-    return count;
-  }
+    }, 0);
+    setCount(count);
+  },[conversation, user]);
+
     return (
       <Box
         onClick={() => handleClick(props.conversation)}
@@ -61,7 +60,7 @@ function Chat(props) {
           sidebar={true}
         />
         <ChatContent conversation={props.conversation} />
-        {unread > 0 ? <SmallAvatar variant="square">{unread}</SmallAvatar> : <Box></Box>}
+        {count > 0 ? <SmallAvatar variant="square">{count}</SmallAvatar> : <Box></Box>}
       </Box>
     );
   }
