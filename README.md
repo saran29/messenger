@@ -1,25 +1,8 @@
 # Messenger
 
-A one-to-one realtime chat app.
+##About
+A one-to-one realtime chat app with login/registration and read receipts. Authenticated using JWT tokens and httpOnly cookies. 
 
-## Running Application Locally
+##Snap
 
-```
-psql
-CREATE  DATABASE messenger;
-\q
 
-cd server
-npm install
-
-// seed the database
-npm run seed
-
-npm run dev
-```
-
-Create a .env file in the server directory and add your session secret
-
-```
-SESSION_SECRET = "your session secret"
-```
